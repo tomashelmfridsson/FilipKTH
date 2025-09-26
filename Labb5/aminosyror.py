@@ -1,6 +1,7 @@
 # Aminosyror
 
 import re
+import sys
 
 # Skapa en klass för aminosyrorna
 class Aminosyra:
@@ -27,20 +28,24 @@ class Sekvens:
 # Läs in från filen aminosyror.txt och skapa upp objekt av klassen Aminosyra
 def las_in_aminosyror(filnamn):
     aminosyror = []
-    with open(filnamn, 'r') as fil:
-        for rad in fil:
+    try:
+        with open(filnamn, 'r') as fil:
+            for rad in fil:
 
-            rad= rad.strip()
-            delar = re.split(r'\s+', rad)
-            print(delar) 
-            if len(delar) == 4:
-                code = delar[0].strip()
-                name = delar[1].strip()
-                grupp = delar[2].strip()
-                vikt = float(delar[3])
-                aminosyra = Aminosyra(code, name, grupp, vikt)
-                aminosyror.append(aminosyra)
-    return aminosyror
+                rad= rad.strip()
+                delar = re.split(r'\s+', rad)
+                print(delar) 
+                if len(delar) == 4:
+                    code = delar[0].strip()
+                    name = delar[1].strip()
+                    grupp = delar[2].strip()
+                    vikt = float(delar[3])
+                    aminosyra = Aminosyra(code, name, grupp, vikt)
+                    aminosyror.append(aminosyra)
+        return aminosyror
+    except FileNotFoundError:
+        print(f"Filen {filnamn} hittades inte.")
+        sys.exit()
 
 aminosyrorLista= las_in_aminosyror('aminosyror.txt')
 for aminosyra in aminosyrorLista:
